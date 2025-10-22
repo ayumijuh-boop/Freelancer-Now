@@ -32,6 +32,23 @@ import React, { useState } from 'react';
       ];
 
       const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+// Controle simples de login
+const [usuarioLogado, setUsuarioLogado] = useState(false);
+
+React.useEffect(() => {
+  const logado = localStorage.getItem("usuarioLogado");
+  if (logado) setUsuarioLogado(true);
+}, []);
+
+const handleLogin = () => {
+  localStorage.setItem("usuarioLogado", "true");
+  setUsuarioLogado(true);
+};
+
+const handleLogout = () => {
+  localStorage.removeItem("usuarioLogado");
+  setUsuarioLogado(false);
+};
 
       return (
         <nav className="bg-gradient-to-r from-sky-500 to-sky-700 p-4 shadow-lg sticky top-0 z-50">
@@ -48,13 +65,34 @@ import React, { useState } from 'react';
                   <Link to={item.path}>{item.icon}{item.name}</Link>
                 </Button>
               ))}
-              <Button variant="secondary" className="bg-white text-sky-700 hover:bg-gray-100 px-3 py-2 text-sm" asChild>
-                <Link to="/login"><LogIn className="mr-2 h-5 w-5" />Login</Link>
-              </Button>
-              <Button className="bg-amber-400 text-sky-800 hover:bg-amber-500 px-3 py-2 text-sm" asChild>
-                <Link to="/cadastro"><UserPlus className="mr-2 h-5 w-5" />Cadastre-se</Link>
-              </Button>
-            </div>
+            {!usuarioLogado && (
+  <div className="flex gap-2">
+    <button
+      onClick={handleLogin}
+      className="flex items-center gap-1 bg-white text-sky-700 border border-sky-700 rounded px-3 py-1"
+    >
+      <LogIn className="w-4 h-4" /> Login
+    </button>
+
+    <button
+      className="flex items-center gap-1 bg-amber-400 text-sky-900 rounded px-3 py-1"
+    >
+      <UserPlus className="w-4 h-4" /> Cadastre-se
+    </button>
+  </div>
+)}
+
+{usuarioLogado && (
+  <div className="flex items-center gap-2">
+    <p className="text-white">Bem-vindo!</p>
+    <button
+      onClick={handleLogout}
+      className="bg-red-500 text-white px-3 py-1 rounded"
+    >
+      Sair
+    </button>
+  </div>
+)}
 
             <div className="md:hidden">
               <Button onClick={toggleMobileMenu} variant="ghost" size="icon" className="text-white hover:bg-sky-600">
