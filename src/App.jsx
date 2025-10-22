@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
     import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-    import { motion, AnimatePresence } from 'framer-motion';
+    import { motion, AnimatePrhesence } from 'framer-motion';
     import { UserPlus, Star, LogIn, UserCircle, Search, PlusCircle, Home, FileText, Menu, X } from 'lucide-react';
     import { Button } from '@/components/ui/button';
     import { Toaster } from '@/components/ui/toaster';
@@ -28,7 +28,24 @@ import React, { useState } from 'react';
       const mobileNavItems = [
         ...navItems,
         { name: 'Login', path: '/login', icon: <LogIn className="mr-2 h-5 w-5" /> },
-        { name: 'Cadastre-se', path: '/cadastro', icon: <UserPlus className="mr-2 h-5 w-5" /> },
+        { name: 'Cadastre-se', path: '/c// Controle simples de login
+const [usuarioLogado, setUsuarioLogado] = useState(false);
+
+React.useEffect(() => {
+  const logado = localStorage.getItem("usuarioLogado");
+  if (logado) setUsuarioLogado(true);
+}, []);
+
+const handleLogin = () => {
+  localStorage.setItem("usuarioLogado", "true");
+  setUsuarioLogado(true);
+};
+
+const handleLogout = () => {
+  localStorage.removeItem("usuarioLogado");
+  setUsuarioLogado(false);
+};
+adastro', icon: <UserPlus className="mr-2 h-5 w-5" /> },
       ];
 
       const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
